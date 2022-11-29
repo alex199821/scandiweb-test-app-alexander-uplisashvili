@@ -12,23 +12,48 @@ const cartSlice = createSlice({
   reducers: {
     // Reducer to add new product to cart
     addToCart: (state, { payload }) => {
-      let updatedCart = state.cart.concat(payload);
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-      return {
-        ...state,
-        cart: updatedCart,
-        itemsInCart: state.itemsInCart + 1,
-      };
+      //This is statement for case that if given product with given attributes already exists products should stack up in the cart
+      if (state.cart.find((item) => item.variantId === payload.variantId)) {
+        let id = state.cart.find(
+          (item) => item.variantId === payload.variantId
+        ).id;
+
+        let newCart = state.cart.map((item) =>
+          item.id === id ? { ...item, amount: item.amount + 1 } : item
+        );
+        localStorage.setItem("cart", JSON.stringify(newCart));
+        return {
+          ...state,
+          cart: newCart,
+          itemsInCart: state.itemsInCart + 1,
+        };
+      } else {
+        //In case the product and its specifications are unique new product is added to cart
+        let updatedCart = state.cart.concat(payload);
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        return {
+          ...state,
+          cart: updatedCart,
+          itemsInCart: state.itemsInCart + 1,
+        };
+      }
     },
     // Reducer to remove product from cart
     removeFromCart: (state, { payload }) => {
       let newCart = state.cart.filter((item) => item.id !== payload);
+      localStorage.setItem("cart", JSON.stringify(newCart));
       return { ...state, cart: newCart };
     },
     // Reducer to handle amount of items inside cart
     handleItemAmount: (state, { payload }) => {
       const { value, id } = payload;
-      state.cart.find((item) => item.id == id).amount = value;
+      let newCart = state.cart.map((item) =>
+        item.id === id ? { ...item, amount: value } : item
+      );
+      return {
+        ...state,
+        cart: newCart,
+      };
     },
     // Reducer to calculate and return final amount to pay
     setCart: (state) => {
@@ -74,50 +99,6 @@ const cartSlice = createSlice({
         finalOrder: [],
       };
     },
-    editAttributes: (state, { payload }) => {
-      const { id, name, option } = payload;
-      state.cart.find((item) => item.id === payload.id)[payload.name] =
-        payload.option;
-
-      // console.log(JSON.stringify(state.cart, undefined, 2));
-      // console.log(payload);
-      // console.log(state.cart.filter((item) => item.id === payload.id));
-      // let newState = state.cart.filter((item) => item.id === payload.id)[0];
-      // let astate = state.cart.filter((item) => item.id !== payload.id)[0];
-      // newState[payload.name] = payload.option;
-
-      // console.log(JSON.stringify(updatedState, undefined, 2));
-      // console.log(JSON.stringify(newState, undefined, 2));
-      // let ar = [];
-      // ar.push(newState);
-      // ar.push(astate);
-      // console.log(ar);
-
-      // const { id, name, option } = payload;
-      // let updateCartMap = () => {
-      //   let newCart = [];
-      //   state.cart.map((item) => {
-      //     // console.log(item);
-      //     console.log(JSON.stringify(item, undefined, 2));
-      //     console.log(JSON.stringify(state.cart, undefined, 2));
-      //     if (item.id === id) {
-      //       // item[name] = option;
-      //       // newCart.push(item);
-      //     } else {
-      //       // newCart.push(item);
-      //     }
-      //   });
-      //   return newCart;
-      // };
-      // // console.log(JSON.stringify(updateCartMap()));
-      // // console.log(JSON.stringify(ar, undefined, 2));
-      // // let itemNew = updateCartMap();
-      // updateCartMap();
-      // return {
-      //   ...state,
-      //   cart: [],
-      // };
-    },
   },
   extraReducers: {},
 });
@@ -130,6 +111,5 @@ export const {
   setItemsInCart,
   setFinalOrder,
   resetState,
-  editAttributes,
 } = cartSlice.actions;
 export default cartSlice.reducer;

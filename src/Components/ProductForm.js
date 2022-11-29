@@ -9,43 +9,52 @@ import OptionsContainer from "./OptionsContainer";
 class ProductForm extends Component {
   state = {
     id: `${this.props.id}-${new Date().getTime()}`,
-    brand: this.props.brand,
-    name: this.props.name,
     amount: 1,
     price: this.props.prices.find((value) => value.currency.label === "USD"),
+    gallery: this.props.gallery,
+    brand: this.props.brand,
+    name: this.props.name,
+  };
+
+  //This function created Variant Id according to chosen attributes - this will be used to stack up products with same attributes in cart
+  createVariantId = () => {
+    let item = [];
+    Object.entries(this.state)
+      .slice(4)
+      .map(([key, value]) => {
+        item.push(`${key}_${value}`);
+      });
+    //Function removes first 4 unneeded values and joins all other values into string
+    return item.join("").replace(/\s/g, "");
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.dispatch(addToCart(this.state));
+    this.props.dispatch(
+      addToCart({ ...this.state, variantId: this.createVariantId() })
+    );
   };
 
-  handleFormState = (result, option) => {
+  handleItemAttributes = (result, option) => {
     this.setState({ ...this.state, [option]: result });
   };
 
-  // componentDidUpdate() {
-  //   console.log(`${this.props.id}-${new Date().getTime()}`);
-  //   console.log();
-  // }
-
   render() {
     const { brand, name, attributes } = this.props;
-
     return (
       <Wrapper onSubmit={this.handleSubmit}>
         <h2 className="brandName">{brand}</h2>
         <h3 className="productName">{name}</h3>
         {attributes.map((attribute, index) => {
-          const { items, name, type, id } = attribute;
+          const { items, name, type } = attribute;
           return (
             <OptionsContainer
               id={this.props.id}
-              key={index}
+              key={`${this.props.id}-${index}`}
               name={name}
-              items={items}
+              options={items}
               type={type}
-              handleFormState={this.handleFormState}
+              handleItemAttributes={this.handleItemAttributes}
               form={this.state}
             />
           );

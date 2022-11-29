@@ -7,17 +7,16 @@ import { dispatch } from "redux";
 // import { GraphQLClient, request, gql } from "graphql-request";
 
 class CartPage extends Component {
-  componentDidUpdate = () => {
-    console.log(this.props);
-  };
-
+  // componentDidUpdate() {
+  //   console.log(this.props.cart);
+  // }
   render() {
     const { cart } = this.props;
     return (
       <Wrapper>
         <h1 className="pageNameLabel">CART</h1>
         {cart.map((item, index) => {
-          return <CartItem key={index} item={item} />;
+          return <CartItem key={item.id} item={item} />;
         })}
       </Wrapper>
     );

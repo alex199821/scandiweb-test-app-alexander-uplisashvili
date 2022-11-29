@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.section`
-  display: flex;
-  position: relative;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  .cartButton {
+    display: flex;
+    position: relative;
+  }
   .itemsInCartMarker {
     display: flex;
     justify-content: center;
@@ -25,5 +29,8 @@ export const Wrapper = styled.section`
     height: 18px;
     width: auto;
     margin-left: 10px;
+  }
+  .cartOverlayContainer {
+    direction: rtl;
   }
 `;

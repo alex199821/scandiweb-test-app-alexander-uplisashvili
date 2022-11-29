@@ -5,27 +5,28 @@ import ColorButton from "./ColorButton";
 import whiteCartIcon from "../assets/images/whiteCartIcon.png";
 
 class OptionsContainer extends Component {
-  state = {};
   render() {
-    const { id, name, items, type, handleFormState, form } = this.props;
-
+    const { id, name, options, type, handleItemAttributes, form } = this.props;
     return (
       <Wrapper>
         <h2 className="optionLabel">{name}:</h2>
         <section className="buttonsContainer">
-          {items.map((item, index) => {
+          {/* The map method below maps all multiple choices which product  attribute has */}
+          {options.map((item, index) => {
             const { displayValue, value } = item;
             if (type === "swatch") {
-              const testIfCheckedColor = () => {
+              //This function compares if color value matches selected color value in cart, if yes highlights chosen value
+              const testIfColorChecked = () => {
                 if (
-                  this.props.props &&
-                  this.props.props.Color === displayValue
+                  this.props.itemInCart &&
+                  this.props.itemInCart.Color === displayValue
                 ) {
                   return true;
                 } else {
                   return false;
                 }
               };
+              // console.log(this.props.name, value);
               return (
                 <ColorButton
                   key={index}
@@ -33,29 +34,34 @@ class OptionsContainer extends Component {
                   value={value}
                   displayValue={displayValue}
                   name={this.props.name}
-                  handleFormState={handleFormState}
-                  form={form}
-                  checked={testIfCheckedColor()}
+                  handleItemAttributes={handleItemAttributes}
+                  item={this.props.itemInCart || form}
+                  checked={testIfColorChecked()}
                 />
               );
             } else {
-              const testIfCheckedOption = () => {
-                if (this.props.props && this.props.props[name] === value) {
+              //This function compares if button value matches selected option value in cart, if yes highlights chosen value
+              const testIfOptionChecked = () => {
+                if (
+                  this.props.itemInCart &&
+                  this.props.itemInCart[name] === value
+                ) {
                   return true;
                 } else {
                   return false;
                 }
               };
+
               return (
                 <OptionButton
                   key={index}
                   id={id}
-                  displayValue={displayValue}
                   value={value}
                   name={this.props.name}
-                  handleFormState={handleFormState}
-                  form={form}
-                  checked={testIfCheckedOption()}
+                  handleItemAttributes={handleItemAttributes}
+                  //This or statement sends cart item as prop in case cart page is opened and provides local state of form in case of PDP Page
+                  item={this.props.itemInCart || form}
+                  checked={testIfOptionChecked()}
                 />
               );
             }

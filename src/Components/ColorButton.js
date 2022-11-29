@@ -5,27 +5,25 @@ import whiteCartIcon from "../assets/images/whiteCartIcon.png";
 class ColorButton extends Component {
   state = {
     checked: this.props.checked,
-    name: this.props.name,
   };
   handleClick = (e) => {
-    this.setState({ checked: !this.state.checked });
-    this.props.handleFormState(e.target.value, this.state.name, this.props.id);
+    if (!this.props.checked) {
+      this.setState({ checked: !this.state.checked });
+    }
+    this.props.handleItemAttributes(e.target.value, this.props.name);
   };
 
   componentDidUpdate = () => {
-    let option = this.state.name;
-    let item =
-      this.props.form.length > 1
-        ? this.props.form.find((item) => item.id === this.props.id)[option]
-        : this.props.form[option];
-
-    if (item !== this.props.displayValue && this.state.checked) {
+    let option = this.props.name;
+    if (
+      this.props.item[option] !== this.props.displayValue &&
+      this.state.checked
+    ) {
       this.setState({ checked: false });
     }
   };
   render() {
     const { displayValue, value } = this.props;
-    // console.log(`${this.state.checked}+${displayValue} `);
     return (
       <Wrapper>
         <button

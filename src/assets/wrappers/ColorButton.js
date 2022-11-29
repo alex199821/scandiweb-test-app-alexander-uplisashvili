@@ -3,8 +3,8 @@ import styled from "styled-components";
 const Wrapper = styled.section`
   .colorButton {
     display: flex;
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
     border: none;
   }
