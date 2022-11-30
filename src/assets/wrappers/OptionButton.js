@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const Wrapper = styled.section`
+const Wrapper = styled.section.attrs((props) => {
+  return { overlay: props.overlay };
+})`
   .sizeButton {
     display: flex;
-    padding: 12px 24px 12px 24px;
-    font-size: 18px;
     text-transform: uppercase;
     font-family: "Roboto Condensed", sans-serif;
     font-weight: 400;
@@ -15,6 +15,23 @@ const Wrapper = styled.section`
     color: var(--extraDark);
     background-color: transparent;
     border: 1px solid var(--extraDark);
+    ${({ overlay }) => {
+      return overlay
+        ? css`
+            /* width: 24px;
+            height: 24px; */
+            /* padding: 6px 10px; */
+            font-size: 12px;
+            min-width: 28px;
+            min-height: 28px;
+          `
+        : css`
+            /* padding: 20px; */
+            width: 65px;
+            height: 45px;
+            font-size: 18px;
+          `;
+    }}
   }
   .sizeButtonSelected {
     background-color: var(--extraDark);

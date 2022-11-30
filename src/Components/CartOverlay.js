@@ -9,10 +9,10 @@ class CartOverlay extends Component {
     return (
       <Wrapper>
         <h3>
-          My Bag: <p>3 items</p>
+          <b>My Bag:</b> 3 items
         </h3>
         {cart.map((item, index) => {
-          return <CartItem key={item.id} item={item} />;
+          return <CartItem key={item.id} item={item} overlay={true} />;
         })}
       </Wrapper>
     );

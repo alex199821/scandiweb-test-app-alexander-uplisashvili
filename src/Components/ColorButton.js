@@ -25,7 +25,7 @@ class ColorButton extends Component {
   render() {
     const { displayValue, value } = this.props;
     return (
-      <Wrapper>
+      <Wrapper overlay={this.props.overlay || false}>
         <button
           style={{
             backgroundColor: value,

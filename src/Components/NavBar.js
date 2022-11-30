@@ -28,6 +28,7 @@ class NavBar extends Component {
             <CartButton />
           </section>
         </Wrapper>
+        {/* <section className="background"></section> */}
         <Outlet />
       </>
     );

@@ -10,7 +10,7 @@ class ProductAmount extends Component {
     } = this.props;
 
     return (
-      <Wrapper>
+      <Wrapper overlay={this.props.overlay || false}>
         <button
           className="amountChangeButton"
           onClick={() => handleAmount(id, "inc", amount)}

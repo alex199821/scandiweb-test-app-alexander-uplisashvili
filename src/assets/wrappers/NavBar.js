@@ -6,11 +6,10 @@ const Wrapper = styled.nav`
   justify-content: space-between;
   width: 85%;
   margin: auto;
+  background-color: blue;
   .selections {
     display: flex;
     flex-direction: row;
-    /* margin-left: 100px;
-    margin-right: 100px; */
     font-size: 16px;
     width: 40%;
     cursor: pointer;
@@ -20,7 +19,6 @@ const Wrapper = styled.nav`
     justify-content: flex-end;
     align-items: center;
     padding-top: 15px;
-    /* padding-bottom: 15px; */
   }
 
   .categories {

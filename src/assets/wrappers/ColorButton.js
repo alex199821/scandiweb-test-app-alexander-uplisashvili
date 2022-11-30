@@ -1,12 +1,24 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const Wrapper = styled.section`
+const Wrapper = styled.section.attrs((props) => {
+  return { overlay: props.overlay };
+})`
   .colorButton {
     display: flex;
-    width: 24px;
-    height: 24px;
     cursor: pointer;
     border: none;
+
+    ${({ overlay }) => {
+      return overlay
+        ? css`
+            width: 16px;
+            height: 16px;
+          `
+        : css`
+            width: 24px;
+            height: 24px;
+          `;
+    }}
   }
 
   .colorButtonSelected {

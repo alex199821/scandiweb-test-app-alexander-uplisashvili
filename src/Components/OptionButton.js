@@ -23,7 +23,7 @@ class OptionButton extends Component {
   render() {
     const { displayValue, value } = this.props;
     return (
-      <Wrapper>
+      <Wrapper overlay={this.props.overlay || false}>
         <input
           className={
             this.state.checked ? "sizeButton sizeButtonSelected" : "sizeButton"

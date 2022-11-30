@@ -34,7 +34,7 @@ class CartItem extends Component {
     ).attributes;
 
     return (
-      <Wrapper>
+      <Wrapper overlay={this.props.overlay || false}>
         <section className="productOption">
           <h2 className="brandLabel">{brand}</h2>
           <h3 className="nameLabel">{name}</h3>
@@ -49,6 +49,7 @@ class CartItem extends Component {
                 type={type}
                 handleItemAttributes={this.errorHandleonCartEdit}
                 itemInCart={this.props.item}
+                overlay={this.props.overlay || false}
               />
             );
           })}
@@ -57,8 +58,9 @@ class CartItem extends Component {
           <ProductAmount
             item={this.props.item}
             handleAmount={this.handleAmount}
+            overlay={this.props.overlay}
           />
-          <ProductSlider item={this.props.item} />
+          <ProductSlider item={this.props.item} overlay={this.props.overlay} />
         </section>
       </Wrapper>
     );

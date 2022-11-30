@@ -1,13 +1,24 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const Wrapper = styled.section`
+const Wrapper = styled.section.attrs((props) => {
+  console.log(props.overlay);
+  return { overlay: props.overlay };
+})`
   .imageContainer {
     display: flex;
     height: 100%;
-    width: 200px;
     justify-content: center;
     align-items: center;
     position: relative;
+    ${({ overlay }) => {
+      return overlay
+        ? css`
+            width: 100px;
+          `
+        : css`
+            width: 200px;
+          `;
+    }}
     .productImage {
       width: 100%;
       height: auto;

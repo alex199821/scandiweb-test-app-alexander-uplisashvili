@@ -8,7 +8,7 @@ class OptionsContainer extends Component {
   render() {
     const { id, name, options, type, handleItemAttributes, form } = this.props;
     return (
-      <Wrapper>
+      <Wrapper overlay={this.props.overlay || false}>
         <h2 className="optionLabel">{name}:</h2>
         <section className="buttonsContainer">
           {/* The map method below maps all multiple choices which product  attribute has */}
@@ -37,6 +37,7 @@ class OptionsContainer extends Component {
                   handleItemAttributes={handleItemAttributes}
                   item={this.props.itemInCart || form}
                   checked={testIfColorChecked()}
+                  overlay={this.props.overlay}
                 />
               );
             } else {
@@ -51,7 +52,6 @@ class OptionsContainer extends Component {
                   return false;
                 }
               };
-
               return (
                 <OptionButton
                   key={index}
@@ -62,6 +62,7 @@ class OptionsContainer extends Component {
                   //This or statement sends cart item as prop in case cart page is opened and provides local state of form in case of PDP Page
                   item={this.props.itemInCart || form}
                   checked={testIfOptionChecked()}
+                  overlay={this.props.overlay}
                 />
               );
             }

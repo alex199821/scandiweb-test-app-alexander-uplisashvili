@@ -27,14 +27,14 @@ class ProductSlider extends Component {
     const { gallery } = this.props.item;
     // console.log(gallery);
     return (
-      <Wrapper>
+      <Wrapper overlay={this.props.overlay || false}>
         <section className="imageContainer">
           <img
             src={gallery[this.state.index]}
             alt="Product"
             className="productImage"
           />
-          {gallery.length > 1 && (
+          {gallery.length > 1 && !this.props.overlay && (
             <div className="sliderButtonContainer">
               <button className="sliderButton" onClick={this.previousPhoto}>
                 <img
