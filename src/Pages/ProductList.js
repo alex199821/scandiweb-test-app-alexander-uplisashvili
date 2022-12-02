@@ -20,7 +20,7 @@ class ProductList extends Component {
           if (loading) return null;
           if (error) return console.log(error);
           let response = data.category.products;
-          console.log(response);
+          // console.log(response);
           return (
             <Wrapper>
               <h1 className="categoryLabel">{this.props.selectedCategory}</h1>

@@ -75,3 +75,34 @@ export const SINGLE_CATEGORY = gql`
     }
   }
 `;
+
+export const SINGLE_PRODUCT = gql`
+  query {
+    product(id: "jacket-canada-goosee") {
+      id
+      name
+      inStock
+      gallery
+      description
+      category
+      attributes {
+        id
+        name
+        type
+        items {
+          displayValue
+          value
+          id
+        }
+      }
+      prices {
+        currency {
+          label
+          symbol
+        }
+        amount
+      }
+      brand
+    }
+  }
+`;

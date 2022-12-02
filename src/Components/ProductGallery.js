@@ -9,7 +9,11 @@ class ProductGalllery extends Component {
       <Wrapper>
         {this.props.gallery.map((image, index) => {
           return (
-            <div key={index} className="galleryImageContainer">
+            <div
+              key={index}
+              className="galleryImageContainer"
+              onClick={() => this.props.setMainImage(index)}
+            >
               <img src={image} alt="Product" className="galleryImage" />
             </div>
           );
