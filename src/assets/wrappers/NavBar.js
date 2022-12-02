@@ -6,7 +6,7 @@ const Wrapper = styled.nav`
   justify-content: space-between;
   width: 85%;
   margin: auto;
-  background-color: blue;
+  /* background-color: blue; */
   .selections {
     display: flex;
     flex-direction: row;
@@ -25,13 +25,13 @@ const Wrapper = styled.nav`
     text-transform: uppercase;
     padding-top: 15px;
 
-    p {
+    .category {
       margin: 0;
       padding-right: 10px;
       padding-left: 10px;
       border-bottom: 1.5px solid transparent;
     }
-    p:hover {
+    .selectedCategory {
       color: var(--green);
       border-bottom: 1.5px solid;
       margin: 0;
@@ -40,6 +40,7 @@ const Wrapper = styled.nav`
   }
   .logo {
     padding-top: 15px;
+    padding-bottom: 15px;
     display: flex;
     height: 30px;
   }

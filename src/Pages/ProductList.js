@@ -1,32 +1,52 @@
 import React, { Component } from "react";
 import Wrapper from "../assets/wrappers/ProductList";
-import Product from "../Components/ProductCard";
-import { productList } from "../Utils/data";
-// import { GraphQLClient, request, gql } from "graphql-request";
+import ProductCard from "../Components/ProductCard";
+import { Query } from "@apollo/client/react/components";
+import { ALL_PRODUCTS, SINGLE_CATEGORY } from "../queries";
+import { connect } from "react-redux";
 
 class ProductList extends Component {
   state = {
-    productList: productList.data.category.products,
+    productList: [],
   };
+
   render() {
     return (
-      <Wrapper>
-        <h1 className="categoryLabel">All</h1>
-        <section className="productsListContainer">
-          {this.state.productList.map((item) => {
-            const { id, name, prices, gallery } = item;
-            return (
-              <Product
-                key={id}
-                name={name}
-                image={gallery[0]}
-                prices={prices[0]}
-              />
-            );
-          })}
-        </section>
-      </Wrapper>
+      <Query
+        query={SINGLE_CATEGORY}
+        variables={{ title: this.props.selectedCategory }}
+      >
+        {({ loading, error, data }) => {
+          if (loading) return null;
+          if (error) return console.log(error);
+          let response = data.category.products;
+          console.log(response);
+          return (
+            <Wrapper>
+              <h1 className="categoryLabel">{this.props.selectedCategory}</h1>
+              <section className="productsListContainer">
+                {response.map((item) => {
+                  const { id, name, prices, gallery, inStock } = item;
+                  return (
+                    <ProductCard
+                      key={id}
+                      name={name}
+                      image={gallery[0]}
+                      prices={prices[0]}
+                      inStock={inStock}
+                    />
+                  );
+                })}
+              </section>
+            </Wrapper>
+          );
+        }}
+      </Query>
     );
   }
 }
-export default ProductList;
+const mapStateToProps = (state) => ({
+  selectedCategory: state.ui.selectedCategory,
+});
+
+export default connect(mapStateToProps)(ProductList);

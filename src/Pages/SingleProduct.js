@@ -16,8 +16,8 @@ import ProductForm from "../Components/ProductForm";
 
 class SingleProduct extends Component {
   state = {
-    singleProduct: singleProduct.data.category.products[1],
-    mainImage: singleProduct.data.category.products[1].gallery[0],
+    singleProduct: singleProduct.data.category.products[5],
+    mainImage: singleProduct.data.category.products[5].gallery[0],
   };
   render() {
     const {

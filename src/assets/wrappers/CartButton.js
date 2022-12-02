@@ -28,17 +28,4 @@ export const Wrapper = styled.section`
       margin-left: 10px;
     }
   }
-
-  .cartOverlayContainer {
-    direction: rtl;
-    /* margin-top: 125px; */
-    .background {
-      background: rgba(57, 55, 72, 0.22);
-      width: 200vw;
-      height: 200vh;
-      margin-right: -80vw;
-      z-index: 999999;
-      position: absolute;
-    }
-  }
 `;

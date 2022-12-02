@@ -20,16 +20,16 @@ const Wrapper = styled.section.attrs((props) => {
         ? css`
             /* width: 24px;
             height: 24px; */
-            /* padding: 6px 10px; */
             font-size: 12px;
             min-width: 28px;
             min-height: 28px;
           `
         : css`
             /* padding: 20px; */
+            padding: 0px 10px;
             width: 65px;
             height: 45px;
-            font-size: 18px;
+            font-size: 16px;
           `;
     }}
   }

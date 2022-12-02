@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Wrapper } from "../assets/wrappers/CurrencySelect";
 import { options } from "../Utils/data";
+import { connect } from "react-redux";
 import arrowIcon from "../assets/images/arrowIcon.png";
+import { setCurrency } from "../features/uiSlice";
 class CurrencySelect extends Component {
   constructor() {
     super();
@@ -34,9 +36,16 @@ class CurrencySelect extends Component {
         (option) => option.label === e.target.value
       )[0],
     });
+    this.props.dispatch(setCurrency(e.target.value));
   };
 
   componentDidMount = () => {
+    this.setState({
+      ...this.state,
+      selectedOption: options.filter(
+        (option) => option.label === this.props.chosenCurrency
+      )[0],
+    });
     document.addEventListener("click", this.handleOptionsClose, true);
   };
 
@@ -46,7 +55,6 @@ class CurrencySelect extends Component {
 
   render() {
     const { selectedOption } = this.state;
-
     return (
       <Wrapper>
         <button
@@ -84,4 +92,8 @@ class CurrencySelect extends Component {
     );
   }
 }
-export default CurrencySelect;
+const mapStateToProps = (state) => ({
+  chosenCurrency: state.ui.chosenCurrency,
+});
+
+export default connect(mapStateToProps)(CurrencySelect);

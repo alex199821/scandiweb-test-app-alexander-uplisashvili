@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import Wrapper from "../assets/wrappers/ProductCard";
 import { product } from "../Utils/data";
 import CheckoutButton from "./CheckoutButton";
-class Product extends Component {
+class ProductCard extends Component {
   state = {
     product: product,
     isHoveringOver: false,
     inStock: true,
+  };
+  componentDidMount = () => {
+    this.setState({ ...this.state, inStock: this.props.inStock });
   };
 
   handleMouseOver = () => {
@@ -21,7 +24,7 @@ class Product extends Component {
     });
   };
   render() {
-    const { image, name, prices } = this.props;
+    const { image, name, prices, inStock } = this.props;
     const {
       amount,
       currency: { symbol },
@@ -31,9 +34,7 @@ class Product extends Component {
         onMouseOver={this.handleMouseOver}
         onMouseOut={this.handleMouseOut}
       >
-        <section
-          className={!this.state.inStock ? "blur" : "productCardContainer"}
-        >
+        <section className={inStock ? "productCardContainer" : "blur"}>
           <div className="imageContainer">
             <img src={image} alt={name} className="productImage" />
             {this.state.isHoveringOver && this.state.inStock && (
@@ -53,4 +54,4 @@ class Product extends Component {
     );
   }
 }
-export default Product;
+export default ProductCard;

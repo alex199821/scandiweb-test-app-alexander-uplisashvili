@@ -5,6 +5,8 @@ import ProductAmount from "./ProductAmount";
 import ProductSlider from "./ProductSlider";
 import { handleItemAmount, removeFromCart } from "../features/cartSlice";
 import { connect } from "react-redux";
+import { Query } from "@apollo/client/react/components";
+import { ALL_PRODUCTS } from "../queries";
 
 class CartItem extends Component {
   errorHandleonCartEdit = () => {
@@ -29,45 +31,55 @@ class CartItem extends Component {
   render() {
     const { id, name, brand, amount, size, price } = this.props.item;
 
-    let attributes = this.props.productsList.find(
-      (item) => item.name === name
-    ).attributes;
-
     return (
-      <Wrapper overlay={this.props.overlay || false}>
-        <section className="productOption">
-          <h2 className="brandLabel">{brand}</h2>
-          <h3 className="nameLabel">{name}</h3>
-          <p className="priceLabel">$50,00</p>
-          {attributes.map((attribute, index) => {
-            const { items, name, type } = attribute;
-            return (
-              <OptionsContainer
-                key={`${this.props.item.id}-${attribute.id}`}
-                name={name}
-                options={items}
-                type={type}
-                handleItemAttributes={this.errorHandleonCartEdit}
-                itemInCart={this.props.item}
-                overlay={this.props.overlay || false}
-              />
-            );
-          })}
-        </section>
-        <section className="incrementAndPhotoContainer">
-          <ProductAmount
-            item={this.props.item}
-            handleAmount={this.handleAmount}
-            overlay={this.props.overlay}
-          />
-          <ProductSlider item={this.props.item} overlay={this.props.overlay} />
-        </section>
-      </Wrapper>
+      <Query query={ALL_PRODUCTS}>
+        {({ loading, error, data }) => {
+          if (loading) return null;
+          if (error) return console.log(error);
+          let attributes = data.categories[0].products.find(
+            (item) => item.name === name
+          ).attributes;
+          console.log(data.categories[0].products);
+          return (
+            <Wrapper overlay={this.props.overlay || false}>
+              <section className="productOption">
+                <h2 className="brandLabel">{brand}</h2>
+                <h3 className="nameLabel">{name}</h3>
+                <p className="priceLabel">$50,00</p>
+                {attributes.map((attribute, index) => {
+                  const { items, name, type } = attribute;
+                  return (
+                    <OptionsContainer
+                      key={`${this.props.item.id}-${attribute.id}`}
+                      name={name}
+                      options={items}
+                      type={type}
+                      handleItemAttributes={this.errorHandleonCartEdit}
+                      itemInCart={this.props.item}
+                      overlay={this.props.overlay || false}
+                    />
+                  );
+                })}
+              </section>
+              <section className="incrementAndPhotoContainer">
+                <ProductAmount
+                  item={this.props.item}
+                  handleAmount={this.handleAmount}
+                  overlay={this.props.overlay}
+                />
+                <ProductSlider
+                  item={this.props.item}
+                  overlay={this.props.overlay}
+                />
+              </section>
+            </Wrapper>
+          );
+        }}
+      </Query>
     );
   }
 }
 const mapStateToProps = (state) => ({
-  productsList: state.products.productsList,
   cart: state.cart,
 });
 

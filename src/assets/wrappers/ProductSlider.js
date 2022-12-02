@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 
 const Wrapper = styled.section.attrs((props) => {
-  console.log(props.overlay);
   return { overlay: props.overlay };
 })`
   .imageContainer {

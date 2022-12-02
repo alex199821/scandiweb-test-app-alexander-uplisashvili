@@ -9,6 +9,7 @@ const Wrapper = styled.section`
   margin-bottom: 100px;
   .categoryLabel {
     font-size: 32px;
+    text-transform: capitalize;
   }
   .productsListContainer {
     display: flex;

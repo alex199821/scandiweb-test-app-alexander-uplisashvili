@@ -5,9 +5,6 @@ import cartIcon from "../assets/images/cartIcon.png";
 import { setItemsInCart } from "../features/cartSlice";
 import CartOverlay from "./CartOverlay";
 class CartButton extends Component {
-  state = {
-    overlayOpen: false,
-  };
   componentDidMount() {
     this.props.dispatch(setItemsInCart());
   }
@@ -17,13 +14,10 @@ class CartButton extends Component {
     this.props.dispatch(setItemsInCart());
   };
 
-  handleClick = () => {
-    this.setState({ overlayOpen: !this.state.overlayOpen });
-  };
   render() {
     return (
       <Wrapper>
-        <section className="cartButton" onClick={this.handleClick}>
+        <section className="cartButton">
           <img src={cartIcon} alt="Cart" className="cartIcon" />
           {this.props.itemsInCart > 0 ? (
             <div className="itemsInCartMarker">
@@ -33,12 +27,6 @@ class CartButton extends Component {
             ""
           )}
         </section>
-        {this.state.overlayOpen && (
-          <section className="cartOverlayContainer">
-            <section className="background" />
-            <CartOverlay />
-          </section>
-        )}
       </Wrapper>
     );
   }

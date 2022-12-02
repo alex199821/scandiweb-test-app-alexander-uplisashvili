@@ -3,8 +3,6 @@ import styled, { css } from "styled-components";
 const Wrapper = styled.section.attrs((props) => {
   return { overlay: props.overlay };
 })`
-  padding-top: 24px;
-  padding-bottom: 24px;
   border-bottom: 1px solid var(--gray);
   display: flex;
   flex-direction: row;
@@ -12,23 +10,27 @@ const Wrapper = styled.section.attrs((props) => {
   ${({ overlay }) => {
     return overlay
       ? css`
+          padding-top: 12px;
+          padding-bottom: 12px;
           border-bottom: none;
         `
       : css`
           border-bottom: 1px solid var(--gray);
+          padding-top: 24px;
+          padding-bottom: 24px;
         `;
   }}
   .brandLabel {
     ${({ overlay }) => {
       return overlay
         ? css`
-            font-size: 14px;
             font-weight: 300;
+            font-size: 14px;
             margin-bottom: 8px;
           `
         : css`
-            font-size: 24px;
             font-weight: 600;
+            font-size: 24px;
             margin-bottom: 14px;
           `;
     }}
@@ -37,13 +39,13 @@ const Wrapper = styled.section.attrs((props) => {
     ${({ overlay }) => {
       return overlay
         ? css`
+            font-weight: 300;
             font-size: 14px;
-            font-weight: 400;
             margin-bottom: 8px;
           `
         : css`
+            font-weight: 400;
             font-size: 24px;
-            font-weight: 300;
             margin-bottom: 14px;
           `;
     }}
@@ -66,7 +68,15 @@ const Wrapper = styled.section.attrs((props) => {
   .incrementAndPhotoContainer {
     display: flex;
     flex-direction: row;
-    column-gap: 24px;
+    ${({ overlay }) => {
+      return overlay
+        ? css`
+            column-gap: 8px;
+          `
+        : css`
+            column-gap: 24px;
+          `;
+    }}
   }
 `;
 

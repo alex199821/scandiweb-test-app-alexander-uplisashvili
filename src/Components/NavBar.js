@@ -1,37 +1,84 @@
 import React, { Component } from "react";
 import Wrapper from "../assets/wrappers/NavBar";
 import { Outlet } from "react-router-dom";
+import { Query } from "@apollo/client/react/components";
 import CartButton from "./CartButton";
 import shopLogo from "../assets/images/shopLogo.png";
-import { categories } from "../Utils/data";
-// import { GraphQLClient, request, gql } from "graphql-request";
 import CurrencySelect from "./CurrencySelect";
+import { ALL_CATEGORIES } from "../queries";
+import CartOverlay from "./CartOverlay";
+import { connect } from "react-redux";
+import { setCategory } from "../features/uiSlice";
 class NavBar extends Component {
+  state = {
+    overlayOpen: false,
+  };
+  handleOverlay = () => {
+    this.setState({ overlayOpen: !this.state.overlayOpen });
+  };
+
+  handleCategory = (category) => {
+    this.props.dispatch(setCategory(category));
+  };
+  componentDidUpdate = () => {
+    if (this.state.overlayOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  };
+
   render() {
     return (
       <>
-        <Wrapper>
-          <section className="selections categories">
-            {categories.map((category, index) => {
-              return (
-                <p key={index} className="category">
-                  {category}
-                </p>
-              );
-            })}
-          </section>
-          <section className="logo">
-            <img src={shopLogo} alt="ShopLogo" />
-          </section>
-          <section className="selections options">
-            <CurrencySelect />
-            <CartButton />
-          </section>
-        </Wrapper>
-        {/* <section className="background"></section> */}
+        <Query query={ALL_CATEGORIES}>
+          {({ loading, error, data }) => {
+            if (loading) return null;
+            if (error) return console.log(error);
+            let categories = data.categories;
+            return (
+              <Wrapper>
+                <section className="selections categories">
+                  {categories.map((category, index) => {
+                    const { name } = category;
+                    return (
+                      <p
+                        key={index}
+                        className={
+                          this.props.selectedCategory === name
+                            ? "category selectedCategory"
+                            : "category"
+                        }
+                        onClick={() => this.handleCategory(name)}
+                      >
+                        {name}
+                      </p>
+                    );
+                  })}
+                </section>
+                <section className="logo">
+                  <img src={shopLogo} alt="ShopLogo" />
+                </section>
+                <section className="selections options">
+                  <CurrencySelect />
+                  <div onClick={this.handleOverlay}>
+                    <CartButton />
+                  </div>
+                </section>
+              </Wrapper>
+            );
+          }}
+        </Query>
+        {this.state.overlayOpen && (
+          <CartOverlay handleOverlay={this.handleOverlay} />
+        )}
         <Outlet />
       </>
     );
   }
 }
-export default NavBar;
+const mapStateToProps = (state) => ({
+  selectedCategory: state.ui.selectedCategory,
+});
+
+export default connect(mapStateToProps)(NavBar);

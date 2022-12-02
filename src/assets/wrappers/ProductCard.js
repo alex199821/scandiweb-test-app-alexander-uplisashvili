@@ -24,6 +24,7 @@ const Wrapper = styled.section`
       position: absolute;
       top: 50%;
       font-weight: 500;
+      font-size: 21px;
     }
   }
   .productName {

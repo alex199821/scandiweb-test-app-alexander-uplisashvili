@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import Wrapper from "../assets/wrappers/ProductForm";
 import cartIcon from "../assets/images/cartIcon.png";
-import SizeButton from "./OptionButton";
-import { dispatch } from "redux";
 import { connect } from "react-redux";
 import { addToCart } from "../features/cartSlice";
 import OptionsContainer from "./OptionsContainer";
