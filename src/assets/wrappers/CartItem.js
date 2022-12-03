@@ -10,8 +10,8 @@ const Wrapper = styled.section.attrs((props) => {
   ${({ overlay }) => {
     return overlay
       ? css`
-          padding-top: 12px;
-          padding-bottom: 12px;
+          padding-top: 20px;
+          padding-bottom: 20px;
           border-bottom: none;
         `
       : css`
@@ -20,51 +20,54 @@ const Wrapper = styled.section.attrs((props) => {
           padding-bottom: 24px;
         `;
   }}
-  .brandLabel {
-    ${({ overlay }) => {
-      return overlay
-        ? css`
-            font-weight: 300;
-            font-size: 14px;
-            margin-bottom: 8px;
-          `
-        : css`
-            font-weight: 600;
-            font-size: 24px;
-            margin-bottom: 14px;
-          `;
-    }}
+  .productOption {
+    .brandLabel {
+      ${({ overlay }) => {
+        return overlay
+          ? css`
+              font-weight: 300;
+              font-size: 14px;
+              margin-bottom: 8px;
+            `
+          : css`
+              font-weight: 600;
+              font-size: 24px;
+              margin-bottom: 14px;
+            `;
+      }}
+    }
+    .nameLabel {
+      ${({ overlay }) => {
+        return overlay
+          ? css`
+              font-weight: 300;
+              font-size: 14px;
+              margin-bottom: 8px;
+            `
+          : css`
+              font-weight: 400;
+              font-size: 24px;
+              margin-bottom: 14px;
+            `;
+      }}
+    }
+    .priceLabel {
+      ${({ overlay }) => {
+        return overlay
+          ? css`
+              font-size: 16px;
+              font-weight: 500;
+              margin-bottom: 8px;
+            `
+          : css`
+              font-size: 22px;
+              font-weight: 700;
+              margin-bottom: 16px;
+            `;
+      }}
+    }
   }
-  .nameLabel {
-    ${({ overlay }) => {
-      return overlay
-        ? css`
-            font-weight: 300;
-            font-size: 14px;
-            margin-bottom: 8px;
-          `
-        : css`
-            font-weight: 400;
-            font-size: 24px;
-            margin-bottom: 14px;
-          `;
-    }}
-  }
-  .priceLabel {
-    ${({ overlay }) => {
-      return overlay
-        ? css`
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 8px;
-          `
-        : css`
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 16px;
-          `;
-    }}
-  }
+
   .incrementAndPhotoContainer {
     display: flex;
     flex-direction: row;

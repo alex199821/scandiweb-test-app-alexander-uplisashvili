@@ -14,7 +14,7 @@ class App extends Component {
         <Routes>
           <Route path="/" element={<NavBar />}>
             <Route path="/" element={<ProductList />} />
-            <Route path="product/1" element={<SingleProduct />} />
+            <Route path="product/:id" element={<SingleProduct />} />
             <Route path="cart" element={<CartPage />} />
           </Route>
         </Routes>

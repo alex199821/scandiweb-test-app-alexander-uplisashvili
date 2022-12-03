@@ -70,7 +70,10 @@ class NavBar extends Component {
           }}
         </Query>
         {this.state.overlayOpen && (
-          <CartOverlay handleOverlay={this.handleOverlay} />
+          <CartOverlay
+            handleOverlay={this.handleOverlay}
+            overlayOpen={this.state.overlayOpen}
+          />
         )}
         <Outlet />
       </>

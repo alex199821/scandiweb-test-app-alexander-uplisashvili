@@ -1,37 +1,31 @@
 import React, { Component } from "react";
-import {
-  singleProduct,
-  singleProduct1,
-  singleProduct2,
-  singleProduct3,
-  singleProduct4,
-  singleProduct5,
-  singleProduct6,
-  singleProduct7,
-} from "../Utils/data";
 import Wrapper from "../assets/wrappers/SingleProduct";
 import ProductGalllery from "../Components/ProductGallery";
 import ProductForm from "../Components/ProductForm";
-// import { GraphQLClient, request, gql } from "graphql-request";
 import { Query } from "@apollo/client/react/components";
 import { SINGLE_PRODUCT } from "../queries";
 class SingleProduct extends Component {
   state = {
-    // singleProduct: singleProduct.data.category.products[5],
-    // mainImage: singleProduct.data.category.products[5].gallery[0],
     index: 0,
+    id: "",
   };
 
   setMainImage = (imageIndex) => {
     this.setState({ index: imageIndex });
   };
+
+  componentDidMount() {
+    // console.log(this.props.match.params.id);
+    // let { id } = this.props.match.params;
+    let id = window.location.pathname.split("/")[2];
+    this.setState({ id: id });
+  }
   render() {
     return (
-      <Query query={SINGLE_PRODUCT}>
+      <Query query={SINGLE_PRODUCT} variables={{ id: this.state.id }}>
         {({ loading, error, data }) => {
           if (loading) return null;
           if (error) return console.log(error);
-          console.log(data.product);
           const {
             attributes,
             brand,

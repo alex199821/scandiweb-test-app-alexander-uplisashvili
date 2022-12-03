@@ -28,9 +28,9 @@ class ProductForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.dispatch(
-      addToCart({ ...this.state, variantId: this.createVariantId() })
-    );
+    // this.props.dispatch(
+    //   addToCart({ ...this.state, variantId: this.createVariantId() })
+    // );
   };
 
   handleItemAttributes = (result, option) => {

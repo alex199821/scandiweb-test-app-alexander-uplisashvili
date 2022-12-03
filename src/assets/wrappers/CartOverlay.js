@@ -27,11 +27,14 @@ const Wrapper = styled.section`
       float: right;
       z-index: 9999999;
       flex-direction: column;
-      overflow: auto;
       overflow-x: hidden;
-      padding: 32px 16px;
+      padding: 32px 0px 32px 16px;
+      padding-right: 32px;
       position: absolute;
       margin-right: -25px;
+      /* ::-webkit-scrollbar {
+        background-color: transparent;
+      } */
       .bagAmountLabel {
         margin-bottom: 16px;
       }
@@ -45,6 +48,7 @@ const Wrapper = styled.section`
         }
         .price {
           font-weight: 700;
+          /* margin-right: 16px; */
         }
       }
 
@@ -52,6 +56,7 @@ const Wrapper = styled.section`
         display: flex;
         justify-content: space-between;
         margin-top: 32px;
+        /* margin-right: 32px; */
         .checkoutButton,
         .viewbagButton {
           font-family: "Raleway", sans-serif;

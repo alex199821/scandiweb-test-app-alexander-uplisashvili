@@ -39,7 +39,7 @@ class CartItem extends Component {
           let attributes = data.categories[0].products.find(
             (item) => item.name === name
           ).attributes;
-          console.log(data.categories[0].products);
+          console.log(data.categories);
           return (
             <Wrapper overlay={this.props.overlay || false}>
               <section className="productOption">

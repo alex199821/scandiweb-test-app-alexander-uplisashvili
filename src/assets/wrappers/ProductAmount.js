@@ -8,6 +8,7 @@ const Wrapper = styled.section.attrs((props) => {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  /* margin-left: 8px; */
   .amountLabel {
     font-weight: 500;
     ${({ overlay }) => {

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Wrapper from "../assets/wrappers/ProductCard";
 import { product } from "../Utils/data";
 import CheckoutButton from "./CheckoutButton";
+import { Link } from "react-router-dom";
+
 class ProductCard extends Component {
   state = {
     product: product,
@@ -23,8 +25,12 @@ class ProductCard extends Component {
       isHoveringOver: false,
     });
   };
+
+  handleAddToCart = () => {
+    console.log("added");
+  };
   render() {
-    const { image, name, prices, inStock } = this.props;
+    const { image, name, prices, inStock, id } = this.props;
     const {
       amount,
       currency: { symbol },
@@ -38,7 +44,9 @@ class ProductCard extends Component {
           <div className="imageContainer">
             <img src={image} alt={name} className="productImage" />
             {this.state.isHoveringOver && this.state.inStock && (
-              <CheckoutButton />
+              <Link to={`/product/${id}/`}>
+                <CheckoutButton />
+              </Link>
             )}
             {!this.state.inStock && (
               <p className="outOfStockLabel">OUT OF STOCK</p>

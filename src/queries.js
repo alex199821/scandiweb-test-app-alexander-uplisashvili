@@ -77,8 +77,8 @@ export const SINGLE_CATEGORY = gql`
 `;
 
 export const SINGLE_PRODUCT = gql`
-  query {
-    product(id: "jacket-canada-goosee") {
+  query ($id: String!) {
+    product(id: $id) {
       id
       name
       inStock
