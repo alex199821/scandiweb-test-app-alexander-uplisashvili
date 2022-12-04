@@ -9,10 +9,23 @@ const Wrapper = styled.section`
   margin-bottom: 100px;
   .pageNameLabel {
     width: 100%;
-    font-size: 22px;
+    font-size: 28px;
     font-weight: 700;
     padding-bottom: 50px;
     border-bottom: 1px solid var(--gray);
+  }
+  .orderInformationContainer {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    .orderInformationLabel {
+      font-size: 16px;
+      font-weight: 400;
+      b {
+        font-weight: 700;
+      }
+    }
   }
 `;
 

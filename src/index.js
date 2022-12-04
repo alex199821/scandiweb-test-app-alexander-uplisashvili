@@ -6,9 +6,17 @@ import { store } from "./store";
 import { Provider } from "react-redux";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
+const createCache = () =>
+  new InMemoryCache({
+    typePolicies: {
+      AttributeSet: {
+        keyFields: false,
+      },
+    },
+  });
 export const client = new ApolloClient({
   uri: "http://localhost:4000/",
-  cache: new InMemoryCache(),
+  cache: createCache(),
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

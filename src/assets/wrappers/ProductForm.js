@@ -13,6 +13,7 @@ const Wrapper = styled.form`
   }
   .priceContainer {
     margin-top: 36px;
+    margin-bottom: 20px;
     .price,
     .priceLabel {
       font-weight: 700;
@@ -27,13 +28,19 @@ const Wrapper = styled.form`
       font-size: 24px;
     }
   }
-  .submitButton {
-    margin-top: 20px;
-    background-color: var(--green);
-    border: none;
-    border-radius: 0;
-    color: var(--white);
-    padding: 16px 90px 16px 90px;
+  .descriptionContainer {
+    width: 300px;
+    font-size: 14px;
+    margin-top: 40px;
+    h3,
+    h1 {
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    p,
+    li {
+      margin-bottom: 16px;
+    }
   }
 `;
 

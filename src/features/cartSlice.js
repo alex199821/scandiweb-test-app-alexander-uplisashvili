@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const initialState = {
   cart: JSON.parse(localStorage.getItem("cart")) || [],
-  // subtotal: 0,
+  subtotal: 0,
   itemsInCart: 0,
   // finalOrder: [],
 };
@@ -56,15 +56,19 @@ const cartSlice = createSlice({
       };
     },
     // Reducer to calculate and return final amount to pay
-    setCart: (state) => {
+    countTotal: (state, { payload }) => {
       const subtotal = () => {
         let totalSum = 0;
         state.cart.map((item) => {
           const { price, amount } = item;
-          totalSum = totalSum + price * amount;
+          let priceInCurrency = price.find(
+            (item) => item.currency.label === payload.label
+          ).amount;
+          totalSum = totalSum + priceInCurrency * amount;
         });
         return totalSum;
       };
+
       return { ...state, subtotal: subtotal() };
     },
     // Reducer to calculate amount of all items in cart
@@ -77,39 +81,17 @@ const cartSlice = createSlice({
         });
         return totalItems;
       };
+
       return { ...state, itemsInCart: itemsAmount() };
     },
-    // Reducer to create final order with all necessary information
-    setFinalOrder: (state, { payload }) => {
-      const newFinalOrder = {
-        orderInformation: payload,
-        cart: state.cart,
-        total: state.subtotal,
-      };
-      return { ...state, finalOrder: newFinalOrder };
-    },
-    // Reducer to clear all items and reset cart
-    resetState: (state) => {
-      localStorage.removeItem("cart");
-      return {
-        ...state,
-        cart: [],
-        subtotal: 0,
-        itemsInCart: 0,
-        finalOrder: [],
-      };
-    },
   },
-  extraReducers: {},
 });
 
 export const {
   addToCart,
   removeFromCart,
   handleItemAmount,
-  setCart,
+  countTotal,
   setItemsInCart,
-  setFinalOrder,
-  resetState,
 } = cartSlice.actions;
 export default cartSlice.reducer;

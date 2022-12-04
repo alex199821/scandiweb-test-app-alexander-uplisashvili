@@ -13,7 +13,8 @@ class OptionsContainer extends Component {
         <section className="buttonsContainer">
           {/* The map method below maps all multiple choices which product  attribute has */}
           {options.map((item, index) => {
-            const { displayValue, value } = item;
+            const { displayValue, value, id } = item;
+
             if (type === "swatch") {
               //This function compares if color value matches selected color value in cart, if yes highlights chosen value
               const testIfColorChecked = () => {
@@ -29,7 +30,7 @@ class OptionsContainer extends Component {
               // console.log(this.props.name, value);
               return (
                 <ColorButton
-                  key={index}
+                  key={id}
                   id={id}
                   value={value}
                   displayValue={displayValue}
@@ -54,7 +55,7 @@ class OptionsContainer extends Component {
               };
               return (
                 <OptionButton
-                  key={index}
+                  key={id}
                   id={id}
                   value={value}
                   name={this.props.name}

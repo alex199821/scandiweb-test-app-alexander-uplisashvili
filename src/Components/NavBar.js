@@ -8,22 +8,19 @@ import CurrencySelect from "./CurrencySelect";
 import { ALL_CATEGORIES } from "../queries";
 import CartOverlay from "./CartOverlay";
 import { connect } from "react-redux";
-import { setCategory } from "../features/uiSlice";
+import { setCategory, handleOverlay } from "../features/uiSlice";
 class NavBar extends Component {
-  state = {
-    overlayOpen: false,
-  };
   handleOverlay = () => {
-    this.setState({ overlayOpen: !this.state.overlayOpen });
+    this.props.dispatch(handleOverlay());
   };
 
   handleCategory = (category) => {
     this.props.dispatch(setCategory(category));
   };
   componentDidUpdate = () => {
-    if (this.state.overlayOpen) {
+    if (this.props.overlayOpen) {
       document.body.style.overflow = "hidden";
-    } else {
+    } else if (!this.props.overlayOpen) {
       document.body.style.overflow = "auto";
     }
   };
@@ -69,10 +66,10 @@ class NavBar extends Component {
             );
           }}
         </Query>
-        {this.state.overlayOpen && (
+        {this.props.overlayOpen && (
           <CartOverlay
             handleOverlay={this.handleOverlay}
-            overlayOpen={this.state.overlayOpen}
+            overlayOpen={this.props.overlayOpen}
           />
         )}
         <Outlet />
@@ -82,6 +79,7 @@ class NavBar extends Component {
 }
 const mapStateToProps = (state) => ({
   selectedCategory: state.ui.selectedCategory,
+  overlayOpen: state.ui.overlayOpen,
 });
 
 export default connect(mapStateToProps)(NavBar);

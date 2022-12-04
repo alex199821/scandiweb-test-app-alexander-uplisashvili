@@ -6,7 +6,7 @@ import ProductSlider from "./ProductSlider";
 import { handleItemAmount, removeFromCart } from "../features/cartSlice";
 import { connect } from "react-redux";
 import { Query } from "@apollo/client/react/components";
-import { ALL_PRODUCTS } from "../queries";
+import { SINGLE_PRODUCT } from "../queries";
 
 class CartItem extends Component {
   errorHandleonCartEdit = () => {
@@ -29,23 +29,25 @@ class CartItem extends Component {
     }
   };
   render() {
-    const { id, name, brand, amount, size, price } = this.props.item;
-
+    const { itemId, name, brand, price } = this.props.item;
+    let priceInCurrency = price.find(
+      (item) => item.currency.label === this.props.selectedCurrency.label
+    );
     return (
-      <Query query={ALL_PRODUCTS}>
+      <Query query={SINGLE_PRODUCT} variables={{ id: itemId }}>
         {({ loading, error, data }) => {
           if (loading) return null;
           if (error) return console.log(error);
-          let attributes = data.categories[0].products.find(
-            (item) => item.name === name
-          ).attributes;
-          console.log(data.categories);
+          let attributes = data.product.attributes;
           return (
             <Wrapper overlay={this.props.overlay || false}>
               <section className="productOption">
                 <h2 className="brandLabel">{brand}</h2>
                 <h3 className="nameLabel">{name}</h3>
-                <p className="priceLabel">$50,00</p>
+                <p className="priceLabel">
+                  {priceInCurrency.currency.symbol}
+                  {priceInCurrency.amount}
+                </p>
                 {attributes.map((attribute, index) => {
                   const { items, name, type } = attribute;
                   return (
@@ -56,7 +58,7 @@ class CartItem extends Component {
                       type={type}
                       handleItemAttributes={this.errorHandleonCartEdit}
                       itemInCart={this.props.item}
-                      overlay={this.props.overlay || false}
+                      overlay={this.props.overlay}
                     />
                   );
                 })}
@@ -81,6 +83,7 @@ class CartItem extends Component {
 }
 const mapStateToProps = (state) => ({
   cart: state.cart,
+  selectedCurrency: state.ui.selectedCurrency,
 });
 
 export default connect(mapStateToProps)(CartItem);

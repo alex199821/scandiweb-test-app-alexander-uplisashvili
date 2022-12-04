@@ -2,14 +2,10 @@ import React, { Component } from "react";
 import Wrapper from "../assets/wrappers/ProductList";
 import ProductCard from "../Components/ProductCard";
 import { Query } from "@apollo/client/react/components";
-import { ALL_PRODUCTS, SINGLE_CATEGORY } from "../queries";
+import { SINGLE_CATEGORY } from "../queries";
 import { connect } from "react-redux";
 
 class ProductList extends Component {
-  state = {
-    productList: [],
-  };
-
   render() {
     return (
       <Query
@@ -25,15 +21,31 @@ class ProductList extends Component {
               <h1 className="categoryLabel">{this.props.selectedCategory}</h1>
               <section className="productsListContainer">
                 {response.map((item) => {
-                  const { id, name, prices, gallery, inStock } = item;
+                  const {
+                    id,
+                    name,
+                    brand,
+                    prices,
+                    gallery,
+                    inStock,
+                    attributes,
+                  } = item;
+                  let price = prices.find(
+                    (item) =>
+                      item.currency.label === this.props.selectedCurrency.label
+                  );
                   return (
                     <ProductCard
                       key={id}
                       id={id}
                       name={name}
+                      brand={brand}
                       image={gallery[0]}
-                      prices={prices[0]}
+                      prices={price}
+                      pricesInCurrencies={prices}
                       inStock={inStock}
+                      attributes={attributes}
+                      gallery={gallery}
                     />
                   );
                 })}
@@ -47,6 +59,7 @@ class ProductList extends Component {
 }
 const mapStateToProps = (state) => ({
   selectedCategory: state.ui.selectedCategory,
+  selectedCurrency: state.ui.selectedCurrency,
 });
 
 export default connect(mapStateToProps)(ProductList);

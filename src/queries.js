@@ -77,7 +77,7 @@ export const SINGLE_CATEGORY = gql`
 `;
 
 export const SINGLE_PRODUCT = gql`
-  query ($id: String!) {
+  query SingleProduct($id: String!) {
     product(id: $id) {
       id
       name

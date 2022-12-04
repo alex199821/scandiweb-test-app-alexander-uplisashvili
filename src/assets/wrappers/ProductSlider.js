@@ -13,7 +13,6 @@ const Wrapper = styled.section.attrs((props) => {
       return overlay
         ? css`
             width: 100px;
-            padding-right: 16px;
           `
         : css`
             width: 200px;

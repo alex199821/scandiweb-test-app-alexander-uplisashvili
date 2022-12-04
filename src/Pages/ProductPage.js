@@ -4,7 +4,8 @@ import ProductGalllery from "../Components/ProductGallery";
 import ProductForm from "../Components/ProductForm";
 import { Query } from "@apollo/client/react/components";
 import { SINGLE_PRODUCT } from "../queries";
-class SingleProduct extends Component {
+
+class ProductPage extends Component {
   state = {
     index: 0,
     id: "",
@@ -15,8 +16,7 @@ class SingleProduct extends Component {
   };
 
   componentDidMount() {
-    // console.log(this.props.match.params.id);
-    // let { id } = this.props.match.params;
+    console.log(this.props);
     let id = window.location.pathname.split("/")[2];
     this.setState({ id: id });
   }
@@ -56,6 +56,8 @@ class SingleProduct extends Component {
                 attributes={attributes}
                 prices={prices}
                 gallery={gallery}
+                inStock={inStock}
+                description={description}
               />
             </Wrapper>
           );
@@ -64,4 +66,4 @@ class SingleProduct extends Component {
     );
   }
 }
-export default SingleProduct;
+export default ProductPage;

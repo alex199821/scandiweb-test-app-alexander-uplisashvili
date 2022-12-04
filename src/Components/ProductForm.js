@@ -4,11 +4,15 @@ import cartIcon from "../assets/images/cartIcon.png";
 import { connect } from "react-redux";
 import { addToCart } from "../features/cartSlice";
 import OptionsContainer from "./OptionsContainer";
+import SubmitButton from "./SubmitButton";
+import { Navigate } from "react-router-dom";
+import parse from "html-react-parser";
+
 class ProductForm extends Component {
   state = {
-    id: `${this.props.id}-${new Date().getTime()}`,
+    itemId: this.props.id,
     amount: 1,
-    price: this.props.prices.find((value) => value.currency.label === "USD"),
+    price: this.props.prices,
     gallery: this.props.gallery,
     brand: this.props.brand,
     name: this.props.name,
@@ -28,9 +32,14 @@ class ProductForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // this.props.dispatch(
-    //   addToCart({ ...this.state, variantId: this.createVariantId() })
-    // );
+    this.props.dispatch(
+      addToCart({
+        ...this.state,
+        id: `${this.props.id}-${new Date().getTime()}`,
+        variantId: this.createVariantId(),
+      })
+    );
+    this.setState({ navigate: true });
   };
 
   handleItemAttributes = (result, option) => {
@@ -38,7 +47,7 @@ class ProductForm extends Component {
   };
 
   render() {
-    const { brand, name, attributes } = this.props;
+    const { brand, name, attributes, description } = this.props;
     return (
       <Wrapper onSubmit={this.handleSubmit}>
         <h2 className="brandName">{brand}</h2>
@@ -60,19 +69,32 @@ class ProductForm extends Component {
         <section className="priceContainer">
           <h3 className="priceLabel">Price:</h3>
           <p className="price">
-            {this.state.price.currency.symbol}
-            {this.state.price.amount}
+            {
+              this.state.price.find(
+                (item) =>
+                  item.currency.label === this.props.selectedCurrency.label
+              ).currency.symbol
+            }
+            {
+              this.state.price.find(
+                (item) =>
+                  item.currency.label === this.props.selectedCurrency.label
+              ).amount
+            }
           </p>
         </section>
-        <button type="submit" className="submitButton">
-          ADD TO CART
-        </button>
+        {this.props.inStock && (
+          <SubmitButton width={"290px"} height={"50px"} value="ADD TO CART" />
+        )}
+        <section className="descriptionContainer">{parse(description)}</section>
+        {this.state.navigate && <Navigate to={`/`} />}
       </Wrapper>
     );
   }
 }
 const mapStateToProps = (state) => ({
   cart: state.cart.cart,
+  selectedCurrency: state.ui.selectedCurrency,
 });
 
 export default connect(mapStateToProps)(ProductForm);

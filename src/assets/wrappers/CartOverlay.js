@@ -21,22 +21,22 @@ const Wrapper = styled.section`
       direction: ltr;
       display: flex;
       margin: auto;
-      width: 300px;
+      width: 310px;
       height: 75vh;
       background-color: var(--white);
       float: right;
       z-index: 9999999;
       flex-direction: column;
+      overflow: scroll;
       overflow-x: hidden;
-      padding: 32px 0px 32px 16px;
-      padding-right: 32px;
+      padding: 32px 16px 32px 16px;
       position: absolute;
-      margin-right: -25px;
-      /* ::-webkit-scrollbar {
-        background-color: transparent;
-      } */
+      margin-right: -35px;
       .bagAmountLabel {
         margin-bottom: 16px;
+        b {
+          font-weight: 700;
+        }
       }
       .priceContainer {
         display: flex;
@@ -57,7 +57,6 @@ const Wrapper = styled.section`
         justify-content: space-between;
         margin-top: 32px;
         /* margin-right: 32px; */
-        .checkoutButton,
         .viewbagButton {
           font-family: "Raleway", sans-serif;
           font-size: 14px;
@@ -73,15 +72,6 @@ const Wrapper = styled.section`
           :active {
             background-color: var(--extraDark);
             color: var(--white);
-          }
-        }
-        .checkoutButton {
-          color: var(--white);
-          background-color: var(--green);
-          border: 1px solid var(--green);
-          :active {
-            background-color: var(--white);
-            color: var(--green);
           }
         }
       }

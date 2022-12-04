@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "./Components/NavBar";
 import CartPage from "./Pages/CartPage";
-import SingleProduct from "./Pages/SingleProduct";
+import ProductPage from "./Pages/ProductPage";
 import ProductList from "./Pages/ProductList";
 class App extends Component {
   // componentDidMount() {
@@ -14,8 +14,9 @@ class App extends Component {
         <Routes>
           <Route path="/" element={<NavBar />}>
             <Route path="/" element={<ProductList />} />
-            <Route path="product/:id" element={<SingleProduct />} />
+            <Route path="pdp/:id" element={<ProductPage />} />
             <Route path="cart" element={<CartPage />} />
+            <Route path="*" element={<ProductList />} />
           </Route>
         </Routes>
       </BrowserRouter>

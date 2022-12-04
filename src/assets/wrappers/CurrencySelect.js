@@ -42,8 +42,8 @@ export const Wrapper = styled.section`
     padding: 10px 20px 10px 10px;
     width: 100%;
     font-size: 18px;
-  }
-  .singleOption:hover {
-    background-color: var(--lightGrey);
+    :hover {
+      background-color: var(--gray);
+    }
   }
 `;

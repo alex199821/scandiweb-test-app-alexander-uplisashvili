@@ -1,8 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  chosenCurrency: "USD",
+  selectedCurrency: JSON.parse(localStorage.getItem("currency")) || {
+    label: "USD",
+    symbol: "$",
+  },
   selectedCategory: "all",
+  overlayOpen: false,
 };
 
 const uiSlice = createSlice({
@@ -11,14 +15,17 @@ const uiSlice = createSlice({
   reducers: {
     // Reducer to set currency
     setCurrency: (state, { payload }) => {
-      return { ...state, chosenCurrency: payload };
+      localStorage.setItem("currency", JSON.stringify(payload));
+      return { ...state, selectedCurrency: payload };
     },
     setCategory: (state, { payload }) => {
       return { ...state, selectedCategory: payload };
     },
+    handleOverlay: (state) => {
+      return { ...state, overlayOpen: !state.overlayOpen };
+    },
   },
-  extraReducers: {},
 });
 
-export const { setCurrency, setCategory } = uiSlice.actions;
+export const { setCurrency, setCategory, handleOverlay } = uiSlice.actions;
 export default uiSlice.reducer;

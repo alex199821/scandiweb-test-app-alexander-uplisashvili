@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import Wrapper from "../assets/wrappers/ProductCard";
 import { product } from "../Utils/data";
 import CheckoutButton from "./CheckoutButton";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { addToCart } from "../features/cartSlice";
+import { connect } from "react-redux";
 
 class ProductCard extends Component {
   state = {
@@ -23,14 +25,32 @@ class ProductCard extends Component {
   handleMouseOut = () => {
     this.setState({
       isHoveringOver: false,
+      reirect: false,
     });
   };
 
-  handleAddToCart = () => {
-    console.log("added");
+  handleAddToCartFromPlp = (e) => {
+    e.preventDefault();
+    if (this.props.attributes < 1) {
+      this.props.dispatch(
+        addToCart({
+          id: `${this.props.id}-${new Date().getTime()}`,
+          variantId: this.props.id,
+          itemId: this.props.id,
+          amount: 1,
+          price: this.props.pricesInCurrencies,
+          gallery: this.props.gallery,
+          brand: this.props.brand,
+          name: this.props.name,
+        })
+      );
+      window.scrollTo(0, 0);
+    } else {
+      this.setState({ redirect: true });
+    }
   };
   render() {
-    const { image, name, prices, inStock, id } = this.props;
+    const { image, name, brand, prices, inStock, id } = this.props;
     const {
       amount,
       currency: { symbol },
@@ -40,26 +60,40 @@ class ProductCard extends Component {
         onMouseOver={this.handleMouseOver}
         onMouseOut={this.handleMouseOut}
       >
-        <section className={inStock ? "productCardContainer" : "blur"}>
-          <div className="imageContainer">
-            <img src={image} alt={name} className="productImage" />
-            {this.state.isHoveringOver && this.state.inStock && (
-              <Link to={`/product/${id}/`}>
-                <CheckoutButton />
-              </Link>
-            )}
-            {!this.state.inStock && (
-              <p className="outOfStockLabel">OUT OF STOCK</p>
-            )}
-          </div>
-          <p className="productName">{name}</p>
-          <p className="productPrice">
-            {symbol}
-            {amount}
-          </p>
-        </section>
+        <Link
+          to={`pdp/${id}`}
+          style={{ textDecoration: "none", color: "var(--extraDark)" }}
+        >
+          <section
+            className={
+              inStock ? "productCardContainer" : "productCardContainer blur"
+            }
+          >
+            <div className="imageContainer">
+              <img src={image} alt={name} className="productImage" />
+              {this.state.isHoveringOver && this.state.inStock && (
+                <CheckoutButton handleAddToCart={this.handleAddToCartFromPlp} />
+              )}
+              {!this.state.inStock && (
+                <p className="outOfStockLabel">OUT OF STOCK</p>
+              )}
+            </div>
+            <p className="productName">
+              {brand} {name}
+            </p>
+            <p className="productPrice">
+              {symbol}
+              {amount}
+            </p>
+          </section>
+        </Link>
+        {this.state.redirect && <Navigate to={`pdp/${this.props.id}`} />}
       </Wrapper>
     );
   }
 }
-export default ProductCard;
+const mapStateToProps = (state) => ({
+  cart: state.cart.cart,
+});
+
+export default connect(mapStateToProps)(ProductCard);

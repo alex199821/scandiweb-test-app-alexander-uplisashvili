@@ -15,7 +15,7 @@ class CurrencySelect extends Component {
     optionsOpen: false,
   };
 
-  handleOptions = (e) => {
+  handleOptions = () => {
     this.setState({
       optionsOpen: !this.state.optionsOpen,
     });
@@ -29,24 +29,28 @@ class CurrencySelect extends Component {
     }
   };
 
-  chooseOption = (e) => {
+  chooseOption = ({ e, label, symbol }) => {
     this.handleOptionsClose(e);
     this.setState({
-      selectedOption: options.filter(
-        (option) => option.label === e.target.value
-      )[0],
+      selectedOption: options.filter((option) => option.label === label)[0],
     });
-    this.props.dispatch(setCurrency(e.target.value));
+    this.props.dispatch(setCurrency({ label, symbol }));
   };
 
   componentDidMount = () => {
+    // console.log(options.filter((option) => option.label === "USD")[0].symbol);
+
     this.setState({
       ...this.state,
       selectedOption: options.filter(
-        (option) => option.label === this.props.chosenCurrency
+        (option) => option.label === this.props.selectedCurrency.label
       )[0],
     });
     document.addEventListener("click", this.handleOptionsClose, true);
+  };
+
+  componentDidUpdate = () => {
+    // console.log(this.props.selectedCurrency);
   };
 
   componentWillUnmount = () => {
@@ -80,7 +84,7 @@ class CurrencySelect extends Component {
               <button
                 key={index}
                 className="singleOption"
-                onClick={this.chooseOption}
+                onClick={(e) => this.chooseOption({ e, label, symbol })}
                 value={label}
               >
                 {symbol} {label}
@@ -93,7 +97,7 @@ class CurrencySelect extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  chosenCurrency: state.ui.chosenCurrency,
+  selectedCurrency: state.ui.selectedCurrency,
 });
 
 export default connect(mapStateToProps)(CurrencySelect);

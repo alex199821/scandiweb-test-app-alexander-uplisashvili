@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.section`
+export const Wrapper = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  border: none;
   background-color: var(--green);
   position: absolute;
   bottom: 0px;
