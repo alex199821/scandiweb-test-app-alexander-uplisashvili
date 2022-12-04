@@ -1,26 +1,31 @@
 import React, { Component } from "react";
 import { Wrapper } from "../assets/wrappers/CurrencySelect";
-import { options } from "../Utils/data";
 import { connect } from "react-redux";
 import arrowIcon from "../assets/images/arrowIcon.png";
 import { setCurrency } from "../features/uiSlice";
+import { Query } from "@apollo/client/react/components";
+import { CURRENCIES } from "../queries";
+
 class CurrencySelect extends Component {
   constructor() {
     super();
+    //Ref is used to diffrentiate Currency Dropdown from all other elements on page
     this.selectorRef = React.createRef(null);
   }
 
   state = {
-    selectedOption: options.filter((option) => option.label === "USD")[0],
+    selectedOption: "",
     optionsOpen: false,
   };
 
+  //Functio to open / close currency drop down
   handleOptions = () => {
     this.setState({
       optionsOpen: !this.state.optionsOpen,
     });
   };
 
+  //Function to close dropdown if there is click anywhere outside of currency dropdown
   handleOptionsClose = (e) => {
     if (e.target !== this.selectorRef.current) {
       this.setState({
@@ -29,28 +34,22 @@ class CurrencySelect extends Component {
     }
   };
 
+  //Function to select currency and save it in redux
   chooseOption = ({ e, label, symbol }) => {
     this.handleOptionsClose(e);
     this.setState({
-      selectedOption: options.filter((option) => option.label === label)[0],
+      selectedOption: { label, symbol },
     });
     this.props.dispatch(setCurrency({ label, symbol }));
   };
 
+  //On page load currency is selected according to redux state and event listener is added to monitor clicks outside dropdown
   componentDidMount = () => {
-    // console.log(options.filter((option) => option.label === "USD")[0].symbol);
-
     this.setState({
       ...this.state,
-      selectedOption: options.filter(
-        (option) => option.label === this.props.selectedCurrency.label
-      )[0],
+      selectedOption: this.props.selectedCurrency,
     });
     document.addEventListener("click", this.handleOptionsClose, true);
-  };
-
-  componentDidUpdate = () => {
-    // console.log(this.props.selectedCurrency);
   };
 
   componentWillUnmount = () => {
@@ -60,42 +59,58 @@ class CurrencySelect extends Component {
   render() {
     const { selectedOption } = this.state;
     return (
-      <Wrapper>
-        <button
-          onClick={this.handleOptions}
-          ref={this.selectorRef}
-          className="selected"
-        >
-          {selectedOption.symbol}
-          <img
-            src={arrowIcon}
-            alt="Arrow"
-            className={
-              this.state.optionsOpen ? "arrowIcon" : "rotate arrowIcon"
-            }
-          />
-        </button>
-        <div
-          className={this.state.optionsOpen ? "options optionsShow" : "options"}
-        >
-          {options.map((option, index) => {
-            const { label, symbol } = option;
-            return (
+      //Query to fetch all avaiable currency variants
+      <Query query={CURRENCIES} variables={{ id: this.state.id }}>
+        {({ loading, error, data }) => {
+          if (loading) return null;
+          if (error) return console.log(error);
+          let currencyOptions = data.category.products[0].prices;
+          return (
+            <Wrapper>
               <button
-                key={index}
-                className="singleOption"
-                onClick={(e) => this.chooseOption({ e, label, symbol })}
-                value={label}
+                onClick={this.handleOptions}
+                ref={this.selectorRef}
+                className="selected"
               >
-                {symbol} {label}
+                {selectedOption.symbol}
+                <img
+                  src={arrowIcon}
+                  alt="Arrow"
+                  className={
+                    this.state.optionsOpen ? "arrowIcon" : "rotate arrowIcon"
+                  }
+                />
               </button>
-            );
-          })}
-        </div>
-      </Wrapper>
+              <div
+                className={
+                  this.state.optionsOpen ? "options optionsShow" : "options"
+                }
+              >
+                {/* All currency options are mapped below */}
+                {currencyOptions.map((option, index) => {
+                  const {
+                    currency: { label, symbol },
+                  } = option;
+                  return (
+                    <button
+                      key={index}
+                      className="singleOption"
+                      onClick={(e) => this.chooseOption({ e, label, symbol })}
+                      value={label}
+                    >
+                      {symbol} {label}
+                    </button>
+                  );
+                })}
+              </div>
+            </Wrapper>
+          );
+        }}
+      </Query>
     );
   }
 }
+//Selector to get data from Redux
 const mapStateToProps = (state) => ({
   selectedCurrency: state.ui.selectedCurrency,
 });

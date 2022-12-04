@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import Wrapper from "../assets/wrappers/CartPage";
 import CartItem from "../Components/CartItem";
 import { connect } from "react-redux";
-import { dispatch } from "redux";
 import { countTotal } from "../features/cartSlice";
 import SubmitButton from "../Components/SubmitButton";
-// import { GraphQLClient, request, gql } from "graphql-request";
 
 class CartPage extends Component {
+  //On page load and rerender amount of items is recounted in redux
   componentDidMount = () => {
     this.props.dispatch(countTotal(this.props.selectedCurrency));
   };
@@ -52,6 +51,7 @@ class CartPage extends Component {
   }
 }
 
+//Selector to get data from Redux
 const mapStateToProps = (state) => ({
   cart: state.cart.cart,
   itemsInCart: state.cart.itemsInCart,

@@ -18,7 +18,7 @@ const Wrapper = styled.section`
     margin-top: 32px;
     display: flex;
     flex-direction: column;
-    row-gap: 8px;
+    row-gap: 12px;
     .orderInformationLabel {
       font-size: 16px;
       font-weight: 400;

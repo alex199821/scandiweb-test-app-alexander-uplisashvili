@@ -1,9 +1,9 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+/* eslint-disable array-callback-return */
+import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   cart: JSON.parse(localStorage.getItem("cart")) || [],
   subtotal: 0,
   itemsInCart: 0,
-  // finalOrder: [],
 };
 
 const cartSlice = createSlice({
@@ -72,7 +72,7 @@ const cartSlice = createSlice({
       return { ...state, subtotal: subtotal() };
     },
     // Reducer to calculate amount of all items in cart
-    setItemsInCart: (state) => {
+    countItemsInCart: (state) => {
       const itemsAmount = () => {
         let totalItems = 0;
         state.cart.map((item) => {
@@ -92,6 +92,6 @@ export const {
   removeFromCart,
   handleItemAmount,
   countTotal,
-  setItemsInCart,
+  countItemsInCart,
 } = cartSlice.actions;
 export default cartSlice.reducer;

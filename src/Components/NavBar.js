@@ -10,13 +10,17 @@ import CartOverlay from "./CartOverlay";
 import { connect } from "react-redux";
 import { setCategory, handleOverlay } from "../features/uiSlice";
 class NavBar extends Component {
+  //Overlay is part of navbar, therefore its opening / closing is managed via Navbar compoenent
   handleOverlay = () => {
     this.props.dispatch(handleOverlay());
   };
 
+  //On click one of 3 categories is selected
   handleCategory = (category) => {
     this.props.dispatch(setCategory(category));
   };
+
+  //Statement which makes sure that if overlay is open it becomes impossible to scroll the page
   componentDidUpdate = () => {
     if (this.props.overlayOpen) {
       document.body.style.overflow = "hidden";
@@ -28,6 +32,7 @@ class NavBar extends Component {
   render() {
     return (
       <>
+        {/* Query to fetch all variants of different product categories */}
         <Query query={ALL_CATEGORIES}>
           {({ loading, error, data }) => {
             if (loading) return null;
@@ -36,6 +41,7 @@ class NavBar extends Component {
             return (
               <Wrapper>
                 <section className="selections categories">
+                  {/* Categories mapped + selected category is underlined */}
                   {categories.map((category, index) => {
                     const { name } = category;
                     return (
@@ -58,7 +64,9 @@ class NavBar extends Component {
                 </section>
                 <section className="selections options">
                   <CurrencySelect />
-                  <div onClick={this.handleOverlay}>
+                  <div
+                    onClick={this.props.cart.length > 0 && this.handleOverlay}
+                  >
                     <CartButton />
                   </div>
                 </section>
@@ -66,6 +74,7 @@ class NavBar extends Component {
             );
           }}
         </Query>
+        {/* Below is overlay container which only appears on state change */}
         {this.props.overlayOpen && (
           <CartOverlay
             handleOverlay={this.handleOverlay}
@@ -80,6 +89,7 @@ class NavBar extends Component {
 const mapStateToProps = (state) => ({
   selectedCategory: state.ui.selectedCategory,
   overlayOpen: state.ui.overlayOpen,
+  cart: state.cart.cart,
 });
 
 export default connect(mapStateToProps)(NavBar);

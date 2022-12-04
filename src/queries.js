@@ -42,6 +42,21 @@ export const ALL_CATEGORIES = gql`
   }
 `;
 
+export const CURRENCIES = gql`
+  query {
+    category(input: { title: "all" }) {
+      products {
+        prices {
+          currency {
+            label
+            symbol
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const SINGLE_CATEGORY = gql`
   query ($title: String!) {
     category(input: { title: $title }) {

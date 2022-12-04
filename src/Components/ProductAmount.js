@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Wrapper from "../assets/wrappers/ProductAmount";
-import whiteCartIcon from "../assets/images/whiteCartIcon.png";
 
 class ProductAmount extends Component {
   render() {

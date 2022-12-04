@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 const Wrapper = styled.section.attrs((props) => {
   return { overlay: props.overlay };
 })`
-  .sizeButton {
+  .optionButton {
     display: flex;
     text-transform: uppercase;
     font-family: "Roboto Condensed", sans-serif;
@@ -18,14 +18,11 @@ const Wrapper = styled.section.attrs((props) => {
     ${({ overlay }) => {
       return overlay
         ? css`
-            /* width: 24px;
-            height: 24px; */
             font-size: 12px;
             min-width: 28px;
             min-height: 28px;
           `
         : css`
-            /* padding: 20px; */
             padding: 0px 10px;
             width: 65px;
             height: 45px;
@@ -33,7 +30,7 @@ const Wrapper = styled.section.attrs((props) => {
           `;
     }}
   }
-  .sizeButtonSelected {
+  .optionButtonSelected {
     background-color: var(--extraDark);
     color: var(--white);
   }

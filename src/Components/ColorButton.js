@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import Wrapper from "../assets/wrappers/ColorButton";
-import whiteCartIcon from "../assets/images/whiteCartIcon.png";
 
 class ColorButton extends Component {
+  //Marks button checked if it is in cart page and selected in cart
   state = {
     checked: this.props.checked,
   };
+
+  //On click checks / unchecks button and selets attribute+sends choice to redux
   handleClick = (e) => {
     if (!this.props.checked) {
       this.setState({ checked: !this.state.checked });
@@ -13,6 +15,7 @@ class ColorButton extends Component {
     this.props.handleItemAttributes(e.target.value, this.props.name);
   };
 
+  //Condition, according to which all attributes, which are not selected in database are also unselected in ui -> in short unselects button when other variant is chosen
   componentDidUpdate = () => {
     let option = this.props.name;
     if (

@@ -4,7 +4,6 @@ const Wrapper = styled.section`
   position: relative;
   z-index: 99;
   .background {
-    /* direction: ltr; */
     background: rgba(57, 55, 72, 0.22);
     width: 200vw;
     height: 200vh;
@@ -48,7 +47,6 @@ const Wrapper = styled.section`
         }
         .price {
           font-weight: 700;
-          /* margin-right: 16px; */
         }
       }
 
@@ -56,7 +54,6 @@ const Wrapper = styled.section`
         display: flex;
         justify-content: space-between;
         margin-top: 32px;
-        /* margin-right: 32px; */
         .viewbagButton {
           font-family: "Raleway", sans-serif;
           font-size: 14px;

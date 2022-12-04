@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 class ProductList extends Component {
   render() {
     return (
+      // Products list is fetched according to category input
       <Query
         query={SINGLE_CATEGORY}
         variables={{ title: this.props.selectedCategory }}
@@ -19,6 +20,7 @@ class ProductList extends Component {
           return (
             <Wrapper>
               <h1 className="categoryLabel">{this.props.selectedCategory}</h1>
+              {/* Each product in list is mapped and rendered in ProductCard Component */}
               <section className="productsListContainer">
                 {response.map((item) => {
                   const {
@@ -57,6 +59,8 @@ class ProductList extends Component {
     );
   }
 }
+
+//Selector to get data from Redux
 const mapStateToProps = (state) => ({
   selectedCategory: state.ui.selectedCategory,
   selectedCurrency: state.ui.selectedCurrency,

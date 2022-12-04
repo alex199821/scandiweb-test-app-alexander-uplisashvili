@@ -22,14 +22,14 @@ const Wrapper = styled.section.attrs((props) => {
       width: 100%;
       height: auto;
     }
-    .sliderButtonContainer {
+    .thumbnailButtonContainer {
       display: flex;
       flex-direction: row;
       position: absolute;
       column-gap: 8px;
       bottom: 16px;
       right: 16px;
-      .sliderButton {
+      .thumbnailButton {
         display: flex;
         background-color: var(--extraDark);
         border-radius: 0;
@@ -40,16 +40,16 @@ const Wrapper = styled.section.attrs((props) => {
         align-items: center;
         justify-content: center;
         padding: 5px;
-        .sliderButtonIcon {
+        .thumbnailButtonIcon {
           display: flex;
           width: auto;
           height: 100%;
         }
       }
-      .sliderButton:hover {
+      .thumbnailButton:hover {
         opacity: 0.9;
       }
-      .sliderButton:active {
+      .thumbnailButton:active {
         opacity: 1;
       }
     }

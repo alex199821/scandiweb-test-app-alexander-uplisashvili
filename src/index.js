@@ -6,6 +6,7 @@ import { store } from "./store";
 import { Provider } from "react-redux";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
+//Default in memory cache parameters are overridden in Apollo, as due to apollo's normalization feature some of attribute data was being cached incorrectly
 const createCache = () =>
   new InMemoryCache({
     typePolicies: {

@@ -11,17 +11,19 @@ class ProductPage extends Component {
     id: "",
   };
 
+  //This function selects main image on PDP
   setMainImage = (imageIndex) => {
     this.setState({ index: imageIndex });
   };
 
+  //On page load item ID is selected from url
   componentDidMount() {
-    console.log(this.props);
     let id = window.location.pathname.split("/")[2];
     this.setState({ id: id });
   }
   render() {
     return (
+      // Each product is fetched using Item Id variable
       <Query query={SINGLE_PRODUCT} variables={{ id: this.state.id }}>
         {({ loading, error, data }) => {
           if (loading) return null;

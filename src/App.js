@@ -5,9 +5,6 @@ import CartPage from "./Pages/CartPage";
 import ProductPage from "./Pages/ProductPage";
 import ProductList from "./Pages/ProductList";
 class App extends Component {
-  // componentDidMount() {
-  //   document.body.style.overflowY = "hidden";
-  // }
   render() {
     return (
       <BrowserRouter>

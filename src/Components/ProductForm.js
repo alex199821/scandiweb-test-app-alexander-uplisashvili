@@ -1,6 +1,6 @@
+/* eslint-disable array-callback-return */
 import React, { Component } from "react";
 import Wrapper from "../assets/wrappers/ProductForm";
-import cartIcon from "../assets/images/cartIcon.png";
 import { connect } from "react-redux";
 import { addToCart } from "../features/cartSlice";
 import OptionsContainer from "./OptionsContainer";
@@ -22,6 +22,7 @@ class ProductForm extends Component {
   createVariantId = () => {
     let item = [];
     Object.entries(this.state)
+      //First 4 states won't be included in VariantId
       .slice(4)
       .map(([key, value]) => {
         item.push(`${key}_${value}`);
@@ -30,18 +31,37 @@ class ProductForm extends Component {
     return item.join("").replace(/\s/g, "");
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.dispatch(
-      addToCart({
-        ...this.state,
-        id: `${this.props.id}-${new Date().getTime()}`,
-        variantId: this.createVariantId(),
-      })
-    );
-    this.setState({ navigate: true });
+  //This function validates form and makes sure that all attributes are selected
+  validateForm = () => {
+    let formValidated = true;
+    Object.entries(this.state).map(([key, value]) => {
+      if (`${value.length}` < 1) {
+        formValidated = false;
+      }
+    });
+    return formValidated;
   };
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    if (this.validateForm() === false) {
+      console.log("Some attributes of the form are not filled in.");
+    } else if (this.validateForm() === true) {
+      //Below item is added to cart, at same time variantID is Created (it is used to check if 2 same products have different attributes) and original order ID is created.
+      console.log(this.createVariantId());
+      this.props.dispatch(
+        addToCart({
+          ...this.state,
+          id: `${this.props.id}-${new Date().getTime()}`,
+          variantId: this.createVariantId(),
+        })
+      );
+      //State change renders Navigate component and redirects user to PLP Page.
+      this.setState({ navigate: true });
+    }
+  };
+
+  //Function below edits prop attribute's values
   handleItemAttributes = (result, option) => {
     this.setState({ ...this.state, [option]: result });
   };
@@ -69,6 +89,7 @@ class ProductForm extends Component {
         <section className="priceContainer">
           <h3 className="priceLabel">Price:</h3>
           <p className="price">
+            {/* This label displays chosen currency symbol and price of product in given currency */}
             {
               this.state.price.find(
                 (item) =>
@@ -83,15 +104,18 @@ class ProductForm extends Component {
             }
           </p>
         </section>
+        {/* if item is in stock only in that casse ADD TO CART button is visible */}
         {this.props.inStock && (
           <SubmitButton width={"290px"} height={"50px"} value="ADD TO CART" />
         )}
+        {/* onClick state changes and navigate component is added to page -> then it redirects user to PLP Page after item is added to cart */}
         <section className="descriptionContainer">{parse(description)}</section>
         {this.state.navigate && <Navigate to={`/`} />}
       </Wrapper>
     );
   }
 }
+//Selector to get data from Redux
 const mapStateToProps = (state) => ({
   cart: state.cart.cart,
   selectedCurrency: state.ui.selectedCurrency,

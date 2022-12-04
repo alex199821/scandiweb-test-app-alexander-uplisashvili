@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   selectedCurrency: JSON.parse(localStorage.getItem("currency")) || {
@@ -18,9 +18,11 @@ const uiSlice = createSlice({
       localStorage.setItem("currency", JSON.stringify(payload));
       return { ...state, selectedCurrency: payload };
     },
+    // Reducer to select category
     setCategory: (state, { payload }) => {
       return { ...state, selectedCategory: payload };
     },
+    //Reducer to open / close overlay container
     handleOverlay: (state) => {
       return { ...state, overlayOpen: !state.overlayOpen };
     },

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Wrapper from "../assets/wrappers/ProductGallery";
-import { product } from "../Utils/data";
 import CheckoutButton from "./CheckoutButton";
 
 class ProductGalllery extends Component {

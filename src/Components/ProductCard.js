@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Wrapper from "../assets/wrappers/ProductCard";
-import { product } from "../Utils/data";
 import CheckoutButton from "./CheckoutButton";
 import { Link, Navigate } from "react-router-dom";
 import { addToCart } from "../features/cartSlice";
@@ -8,7 +7,6 @@ import { connect } from "react-redux";
 
 class ProductCard extends Component {
   state = {
-    product: product,
     isHoveringOver: false,
     inStock: true,
   };
@@ -16,6 +14,7 @@ class ProductCard extends Component {
     this.setState({ ...this.state, inStock: this.props.inStock });
   };
 
+  //Function below control hovering over Product Card
   handleMouseOver = () => {
     this.setState({
       isHoveringOver: true,
@@ -29,13 +28,15 @@ class ProductCard extends Component {
     });
   };
 
+  //This function allows user to add a product to the cart from PLP if it doesn’t have any attributes, else it redirects user to PDP
   handleAddToCartFromPlp = (e) => {
     e.preventDefault();
     if (this.props.attributes < 1) {
       this.props.dispatch(
         addToCart({
           id: `${this.props.id}-${new Date().getTime()}`,
-          variantId: this.props.id,
+          //In case of products with no attribute every time oly item brand and name will be in variantId
+          variantId: `brand_${this.props.brand}name_${this.props.name}`,
           itemId: this.props.id,
           amount: 1,
           price: this.props.pricesInCurrencies,
@@ -46,6 +47,7 @@ class ProductCard extends Component {
       );
       window.scrollTo(0, 0);
     } else {
+      //This state change makes redirect true what allows <Navigate/> to take user to PDP Page
       this.setState({ redirect: true });
     }
   };
@@ -60,6 +62,7 @@ class ProductCard extends Component {
         onMouseOver={this.handleMouseOver}
         onMouseOut={this.handleMouseOut}
       >
+        {/* This link wraps whole Product Card what allows user to go Product's PDP Page if Checkout button was not clicked */}
         <Link
           to={`pdp/${id}`}
           style={{ textDecoration: "none", color: "var(--extraDark)" }}
@@ -87,11 +90,13 @@ class ProductCard extends Component {
             </p>
           </section>
         </Link>
+        {/* Component to redirect user to PDP Page */}
         {this.state.redirect && <Navigate to={`pdp/${this.props.id}`} />}
       </Wrapper>
     );
   }
 }
+//Selector to get data from Redux
 const mapStateToProps = (state) => ({
   cart: state.cart.cart,
 });

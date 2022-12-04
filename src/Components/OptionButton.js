@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import Wrapper from "../assets/wrappers/OptionButton";
-import whiteCartIcon from "../assets/images/whiteCartIcon.png";
 
 class OptionButton extends Component {
+  //Marks button checked if it is in cart page and selected in cart
   state = {
     checked: this.props.checked,
   };
+
+  //On click checks / unchecks button and selets attribute+sends choice to redux
   handleClick = (e) => {
     if (!this.props.checked) {
       this.setState({ checked: !this.state.checked });
@@ -21,12 +23,14 @@ class OptionButton extends Component {
     }
   };
   render() {
-    const { displayValue, value } = this.props;
+    const { value } = this.props;
     return (
       <Wrapper overlay={this.props.overlay || false}>
         <input
           className={
-            this.state.checked ? "sizeButton sizeButtonSelected" : "sizeButton"
+            this.state.checked
+              ? "optionButton optionButtonSelected"
+              : "optionButton"
           }
           type="button"
           value={value}
