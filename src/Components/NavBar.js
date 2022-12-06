@@ -36,7 +36,8 @@ class NavBar extends Component {
         <Query query={ALL_CATEGORIES}>
           {({ loading, error, data }) => {
             if (loading) return null;
-            if (error) return console.log(error);
+            {/* Display error if Graph QL End point not launched */}
+            if (error) return <h1 className="serverError">CONNECTION ERROR://</h1>
             let categories = data.categories;
             return (
               <Wrapper>
