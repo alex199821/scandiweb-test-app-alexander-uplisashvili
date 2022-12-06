@@ -25,7 +25,7 @@ class CartItem extends Component {
   };
 
   componentDidUpdate = () => {
-    //Conditional case, in which if amount of item in cart falls below 0, item is removed from cart
+    //Conditional case, in which if amount of item in cart falls below 1, item is removed from cart
     if (this.props.item.amount < 1) {
       this.props.dispatch(removeFromCart(this.props.item.id));
     }

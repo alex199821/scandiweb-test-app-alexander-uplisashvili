@@ -21,6 +21,7 @@ class ProductForm extends Component {
   //This function created Variant Id according to chosen attributes - this will be used to stack up products with same attributes in cart
   createVariantId = () => {
     let item = [];
+    //Used Oject entries to map over "this.state" object
     Object.entries(this.state)
       //First 4 states won't be included in VariantId
       .slice(4)
@@ -48,7 +49,6 @@ class ProductForm extends Component {
       console.log("Some attributes of the form are not filled in.");
     } else if (this.validateForm() === true) {
       //Below item is added to cart, at same time variantID is Created (it is used to check if 2 same products have different attributes) and original order ID is created.
-      console.log(this.createVariantId());
       this.props.dispatch(
         addToCart({
           ...this.state,
@@ -108,8 +108,8 @@ class ProductForm extends Component {
         {this.props.inStock && (
           <SubmitButton width={"290px"} height={"50px"} value="ADD TO CART" />
         )}
-        {/* onClick state changes and navigate component is added to page -> then it redirects user to PLP Page after item is added to cart */}
         <section className="descriptionContainer">{parse(description)}</section>
+        {/* onClick state changes and navigate component is added to page -> then it redirects user to PLP Page after item is added to cart */}
         {this.state.navigate && <Navigate to={`/`} />}
       </Wrapper>
     );

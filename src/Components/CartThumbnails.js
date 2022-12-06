@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Wrapper from "../assets/wrappers/CartThumbnails";
 import arrowNext from "../assets/images/arrowNext.png";
 import arrowPrev from "../assets/images/arrowPrev.png";
-
+//Component which contains images of products inside cart
 class CartThumbnails extends Component {
   state = {
     index: 0,
@@ -31,6 +31,7 @@ class CartThumbnails extends Component {
             alt="Product"
             className="productImage"
           />
+          {/* Arrow icons over image disaplayed if there is more than 1 image of an item  */}
           {gallery.length > 1 && !this.props.overlay && (
             <div className="thumbnailButtonContainer">
               <button className="thumbnailButton" onClick={this.previousPhoto}>

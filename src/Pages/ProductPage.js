@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Wrapper from "../assets/wrappers/SingleProduct";
+import Wrapper from "../assets/wrappers/ProductPage";
 import ProductGalllery from "../Components/ProductGallery";
 import ProductForm from "../Components/ProductForm";
 import { Query } from "@apollo/client/react/components";
@@ -16,7 +16,7 @@ class ProductPage extends Component {
     this.setState({ index: imageIndex });
   };
 
-  //On page load item ID is selected from url
+  //On page load item ID is parsed from url
   componentDidMount() {
     let id = window.location.pathname.split("/")[2];
     this.setState({ id: id });

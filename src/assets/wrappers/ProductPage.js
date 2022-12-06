@@ -11,9 +11,11 @@ const Wrapper = styled.section`
     margin-left: 40px;
     width: 35vw;
     height: 35vw;
+    display: flex;
+
     .mainImage {
       object-fit: scale-down;
-      object-position: top left;
+      object-position: center left;
       height: 100%;
       width: 100%;
     }

@@ -67,6 +67,7 @@ class CurrencySelect extends Component {
           let currencyOptions = data.category.products[0].prices;
           return (
             <Wrapper>
+              {/* Button for currecy drop down which contains selected symbol and arrow inside dropdown  */}
               <button
                 onClick={this.handleOptions}
                 ref={this.selectorRef}

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  //Initial state is loaded from local storage if there is one or set to default USD if local storage is empty
   selectedCurrency: JSON.parse(localStorage.getItem("currency")) || {
     label: "USD",
     symbol: "$",
@@ -18,7 +19,7 @@ const uiSlice = createSlice({
       localStorage.setItem("currency", JSON.stringify(payload));
       return { ...state, selectedCurrency: payload };
     },
-    // Reducer to select category
+    // Reducer to select category on PLP
     setCategory: (state, { payload }) => {
       return { ...state, selectedCategory: payload };
     },

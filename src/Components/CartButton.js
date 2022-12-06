@@ -4,7 +4,7 @@ import { Wrapper } from "../assets/wrappers/CartButton";
 import cartIcon from "../assets/images/cartIcon.png";
 import { countItemsInCart } from "../features/cartSlice";
 class CartButton extends Component {
-  //Functions to count amount of items in cart on load and on every rerender
+  //Functions to count amount of items in cart on load and on rerender
   componentDidMount() {
     this.props.dispatch(countItemsInCart());
   }
